@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Svefnleysis Alvarleikastuðull (ISI)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .submit {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .result {
+            margin-top: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Svefnleysis Alvarleikastuðull (ISI)</h1>
+
+    <form id="isiForm">
+        <div class="question">
+            <label for="q1">1. Hversu erfitt hefur verið að sofna?</label><br>
+            <input type="radio" name="q1" value="0" required> Engin vandamál<br>
+            <input type="radio" name="q1" value="1"> Lítilvæg vandamál<br>
+            <input type="radio" name="q1" value="2"> Miðlungs vandamál<br>
+            <input type="radio" name="q1" value="3"> Mikil vandamál<br>
+            <input type="radio" name="q1" value="4"> Mjög alvarleg vandamál<br>
+        </div>
+
+        <div class="question">
+            <label for="q2">2. Hversu erfitt hefur verið að halda svefni (vakna á nóttunni)?</label><br>
+            <input type="radio" name="q2" value="0" required> Engin vandamál<br>
+            <input type="radio" name="q2" value="1"> Lítilvæg vandamál<br>
+            <input type="radio" name="q2" value="2"> Miðlungs vandamál<br>
+            <input type="radio" name="q2" value="3"> Mikil vandamál<br>
+            <input type="radio" name="q2" value="4"> Mjög alvarleg vandamál<br>
+        </div>
+
+        <div class="question">
+            <label for="q3">3. Hversu erfitt hefur verið að vakna of snemma og geta ekki sofnað aftur?</label><br>
+            <input type="radio" name="q3" value="0" required> Engin vandamál<br>
+            <input type="radio" name="q3" value="1"> Lítilvæg vandamál<br>
+            <input type="radio" name="q3" value="2"> Miðlungs vandamál<br>
+            <input type="radio" name="q3" value="3"> Mikil vandamál<br>
+            <input type="radio" name="q3" value="4"> Mjög alvarleg vandamál<br>
+        </div>
+
+        <div class="question">
+            <label for="q4">4. Hversu ánægður/ánægð eða óánægður/óánægð ert þú með svefn þinn?</label><br>
+            <input type="radio" name="q4" value="0" required> Mjög ánægður/ánægð<br>
+            <input type="radio" name="q4" value="1"> Nokkuð ánægður/ánægð<br>
+            <input type="radio" name="q4" value="2"> Miðlungs ánægður/ánægð<br>
+            <input type="radio" name="q4" value="3"> Nokkuð óánægður/óánægð<br>
+            <input type="radio" name="q4" value="4"> Mjög óánægður/óánægð<br>
+        </div>
+
+        <div class="question">
+            <label for="q5">5. Hversu mikið hefur svefnleysi truflað daglega starfsemi þína?</label><br>
+            <input type="radio" name="q5" value="0" required> Engar truflanir<br>
+            <input type="radio" name="q5" value="1"> Lítilvæg truflun<br>
+            <input type="radio" name="q5" value="2"> Miðlungs truflun<br>
+            <input type="radio" name="q5" value="3"> Mikil truflun<br>
+            <input type="radio" name="q5" value="4"> Mjög alvarleg truflun<br>
+        </div>
+
+        <div class="question">
+            <label for="q6">6. Hversu mikið hefur þú tekið eftir því að svefnleysið hefur áhrif á þig?</label><br>
+            <input type="radio" name="q6" value="0" required> Ekkert<br>
+            <input type="radio" name="q6" value="1"> Lítið<br>
+            <input type="radio" name="q6" value="2"> Miðlungs<br>
+            <input type="radio" name="q6" value="3"> Mikið<br>
+            <input type="radio" name="q6" value="4"> Mjög mikið<br>
+        </div>
+
+        <div class="question">
+            <label for="q7">7. Hversu áhyggjufullur/áhyggjufull ertu vegna svefnvanda þíns?</label><br>
+            <input type="radio" name="q7" value="0" required> Engar áhyggjur<br>
+            <input type="radio" name="q7" value="1"> Lítilvægar áhyggjur<br>
+            <input type="radio" name="q7" value="2"> Miðlungs áhyggjur<br>
+            <input type="radio" name="q7" value="3"> Miklar áhyggjur<br>
+            <input type="radio" name="q7" value="4"> Mjög miklar áhyggjur<br>
+        </div>
+
+        <div class="submit">
+            <input type="button" value="Senda" onclick="calculateScore()">
+        </div>
+    </form>
+
+    <div id="result" class="result"></div>
+
+    <script>
+        function calculateScore() {
+            // Get all radio inputs
+            const form = document.forms['isiForm'];
+            let score = 0;
+
+            // Loop through each question and add to score
+            for (let i = 1; i <= 7; i++) {
+                const question = form[`q${i}`];
+                for (let option of question) {
+                    if (option.checked) {
+                        score += parseInt(option.value);
+                    }
+                }
+            }
+
+            // Determine severity and advice based on the score
+            let resultText = `Heildarstig þín eru: ${score}. `;
+
+            if (score <= 7) {
+                resultText += "Engin klínísk svefnröskun. Það virðist ekki vera þörf á meðferð.";
+            } else if (score <= 14) {
+                resultText += "Væg svefnröskun. Bætt svefnvenjur og svefnhreinlæti mælt með.";
+            } else if (score <= 21) {
+                resultText += "Miðlungs svefnröskun. Hugræn atferlismeðferð fyrir svefnleysi (CBT-I) er mælt með.";
+            } else {
+                resultText += "Alvarleg svefnröskun. Leitaðu til sérfræðings og íhugaðu bæði hugræna atferlismeðferð og hugsanlega lyfjameðferð.";
+            }
+
+            // Display result
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+
+</body>
+</html>
